@@ -159,6 +159,7 @@ h6 {
 .header .logo img {
   max-height: 260px;
   margin-right: 8px;
+  filter: brightness(0) invert(1);
 }
 
 .header .logo h1 {
@@ -857,9 +858,9 @@ section,
 
 .hero h1 {
   margin: 0;
-  font-size: 48px;
+  font-size: 32px;
   font-weight: 700;
-  line-height: 56px;
+  line-height: 46px;
 }
 
 .hero p {
@@ -918,8 +919,8 @@ section,
 
 @media (max-width: 640px) {
   .hero h1 {
-    font-size: 28px;
-    line-height: 36px;
+    font-size: 24px;
+    line-height: 32px;
   }
 
   .hero p {
@@ -971,6 +972,10 @@ section,
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
+.about .content > p {
+  text-align: justify;
+}
+
 .about ul {
   list-style: none;
   padding: 0;
