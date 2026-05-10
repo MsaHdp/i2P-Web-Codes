@@ -147,10 +147,18 @@ h6 {
 
   --heading-color: #ffffff;
   color: var(--default-color);
-  background-color: var(--background-color);
-  padding: 5px 0;
-  transition: padding 0.35s ease, background-color 0.5s;
+  background-color: transparent;
+  padding: 0;
+  transition: background-color 0.5s;
   z-index: 997;
+}
+
+/* Blue bar matches .container width (see header inner div in HTML) */
+.header > .container {
+  background-color: var(--background-color);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  transition: padding 0.35s ease, background-color 0.5s, box-shadow 0.35s ease;
 }
 
 .header .logo {
@@ -217,8 +225,9 @@ h6 {
 
 /* Compact header after scroll (all pages; JS adds .scrolled to body)
 ------------------------------*/
-.scrolled .header {
-  padding: 10px 0;
+.scrolled .header > .container {
+  padding-top: 10px;
+  padding-bottom: 10px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 }
 
@@ -1540,31 +1549,37 @@ section#about.about {
 .call-to-action {
   padding: 120px 0;
   position: relative;
-  clip-path: inset(0);
+  /* No photo — only the panel uses a gradient; avoid full-bleed flat .dark-background fill */
+  background-color: transparent;
 }
 
-.call-to-action img {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-}
-
-.call-to-action:before {
-  content: "";
-  background: color-mix(in srgb, var(--background-color), transparent 35%);
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
-
-.call-to-action .container {
+/* Gradient panel matches .container width (inherits --background-color etc. from .dark-background on section) */
+.call-to-action__panel {
   position: relative;
-  z-index: 3;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--background-color) 75%, #0f172a) 0%,
+    var(--background-color) 38%,
+    color-mix(in srgb, var(--accent-color) 45%, var(--background-color)) 72%,
+    color-mix(in srgb, var(--accent-color) 85%, var(--surface-color)) 100%
+  );
+}
+
+.call-to-action__copy {
+  padding-left: 2ch;
+}
+
+.call-to-action__panel-inner {
+  position: relative;
+  padding: 48px 0;
+}
+
+@media (max-width: 991px) {
+  .call-to-action__panel-inner {
+    padding: 36px 0;
+  }
 }
 
 .call-to-action h3 {
