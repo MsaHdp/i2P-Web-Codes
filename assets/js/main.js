@@ -80,13 +80,15 @@
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (scrollTop) {
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
+  }
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
@@ -116,9 +118,9 @@
    */
   function initSwiper() {
     document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
+      const configEl = swiperElement.querySelector(".swiper-config");
+      if (!configEl) return;
+      let config = JSON.parse(configEl.innerHTML.trim());
 
       if (swiperElement.classList.contains("swiper-tab")) {
         initSwiperWithCustomPagination(swiperElement, config);
@@ -228,5 +230,48 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  /**
+   * Tagline typewriter banner (index / any page with .tagline-type-banner__typed)
+   */
+  function initTaglineTypewriter() {
+    const el = document.querySelector('.tagline-type-banner__typed');
+    if (!el) return;
+    const text = el.getAttribute('data-typed-text') || '';
+    if (!text.length) return;
+
+    let charIndex = 0;
+    let deleting = false;
+    const typeDelay = 155;
+    const deleteDelay = 70;
+    const pauseAtEnd = 3200;
+    const pauseBeforeRetype = 700;
+
+    function tick() {
+      if (!deleting) {
+        if (charIndex < text.length) {
+          el.textContent = text.slice(0, charIndex + 1);
+          charIndex++;
+          setTimeout(tick, typeDelay);
+        } else {
+          setTimeout(() => {
+            deleting = true;
+            tick();
+          }, pauseAtEnd);
+        }
+      } else if (charIndex > 0) {
+        charIndex--;
+        el.textContent = text.slice(0, charIndex);
+        setTimeout(tick, deleteDelay);
+      } else {
+        deleting = false;
+        setTimeout(tick, pauseBeforeRetype);
+      }
+    }
+
+    tick();
+  }
+
+  window.addEventListener('load', initTaglineTypewriter);
 
 })();
