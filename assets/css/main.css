@@ -656,8 +656,12 @@ h6 {
   color: var(--heading-color);
   font-size: 28px;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: none;
   font-family: var(--heading-font);
+}
+
+.footer .sitename {
+  text-transform: none;
 }
 
 .footer .footer-contact p {
