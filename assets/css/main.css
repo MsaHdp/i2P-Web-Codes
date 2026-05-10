@@ -1039,18 +1039,24 @@ section#hero.hero .container {
 .tagline-type-banner__workflow .container {
   padding-top: 0;
   padding-bottom: 0;
+  display: flex;
+  justify-content: center;
+  overflow-x: clip;
 }
 
+/* 125% vs former 100% width: img-fluid max-width:100% blocked scaling; width drives height for this asset */
 .tagline-type-banner__workflow-img {
   width: 100%;
-  max-height: min(47.5vw, 375px);
+  max-width: none;
+  height: auto;
+  flex-shrink: 0;
   object-fit: contain;
   object-position: center top;
 }
 
 @media (max-width: 991px) {
   .tagline-type-banner__workflow-img {
-    max-height: min(55vw, 275px);
+    width: 100%;
   }
 }
 
